@@ -1,37 +1,35 @@
-while True:
-    try:
-        n = int(input())
-        while True:
-            permut = input()
-            if len(permut)==1 and permut[0]=='0':
-                print()
-                break
-            vagoes = list(map(int,permut.split()))
-            vagoes.reverse()
-            to_b = []
-            station = []
-            for vagao in vagoes:
-                if vagao == (n-len(to_b)):
-                    to_b.append(vagao)
-                    while len(station):
-                        vagao_station = station.pop()
-                        if vagao_station == (n-len(to_b)):
-                            to_b.append(vagao_station)
-                        else:
-                            station.append(vagao_station)
-                            break
-                else:
-                    station.append(vagao)
-            if (len(station)):
-                print('No')
-            else:
-                print('Yes')
-            # while len(station):
-            #     vagao_station = station.pop()
-            #     to_b.append(vagao_station)
+def rails(n):
+    permut = list(map(int,input().split(" ")))
+    if len(permut)<n:
+        return None
+    b_station = []
+    station = []
+    mirror = [i+1 for i in range(n)]
+    # mirror.reverse()
+    # mudar a ordem para trabalhar com a estrutura de fila
+    permut.reverse() 
+    for i in range(n):
+        #verificar se o vagão esperado está em permut[i]
+        if permut[i]==(n-len(b_station)):
+            b_station.append(permut[i])
+        else:
+            while (station and station[-1]==(n-len(b_station))):
+                b_station.append(station.pop(-1))
+            station.append(permut[i])
             
-    except EOFError:
-        break
-    except ValueError:
-        break
-
+    
+    while station:
+       b_station.append(station.pop(len(station)-1))
+    
+    b_station.reverse()
+    if b_station == mirror:
+        return 'Yes'
+    else:
+        return 'No'      
+    
+    
+    
+while n:=int(input()):
+    while result:=rails(n):
+        print(result)
+    print()
